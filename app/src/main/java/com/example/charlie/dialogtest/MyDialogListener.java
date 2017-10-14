@@ -5,6 +5,6 @@ package com.example.charlie.dialogtest;
  */
 
 public interface MyDialogListener {
-    public void onPositiveClicked(String email);
+    public void onPositiveClicked(String email,String name);
     public void onNegativeClicked();
 }

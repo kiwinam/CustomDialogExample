@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,6 +14,9 @@ import android.widget.TextView;
  */
 
 public class CustomDialog extends Dialog implements View.OnClickListener{
+
+    private MyDialogListener dialogListener;
+
     private static final int LAYOUT = R.layout.dialog_custom;
 
     private Context context;
@@ -25,15 +29,15 @@ public class CustomDialog extends Dialog implements View.OnClickListener{
 
     private String name;
 
-    public CustomDialog(@NonNull Context context) {
-        super(context);
-        this.context = context;
-    }
 
     public CustomDialog(Context context,String name){
         super(context);
         this.context = context;
         this.name = name;
+    }
+
+    public void setDialogListener(MyDialogListener dialogListener){
+        this.dialogListener = dialogListener;
     }
 
     @Override
@@ -50,7 +54,7 @@ public class CustomDialog extends Dialog implements View.OnClickListener{
         cancelTv.setOnClickListener(this);
         searchTv.setOnClickListener(this);
 
-        if(name != null){
+        if(!TextUtils.isEmpty(name)){
             nameEt.setText(name);
         }
     }
@@ -62,7 +66,12 @@ public class CustomDialog extends Dialog implements View.OnClickListener{
                 cancel();
                 break;
             case R.id.findPwDialogFindTv:
+                String email = emailEt.getText().toString();
+                String name = nameEt.getText().toString();
+                dialogListener.onPositiveClicked(email,name);
+                dismiss();
                 break;
         }
     }
+
 }
